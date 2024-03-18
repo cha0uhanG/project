@@ -1,0 +1,14 @@
+class _ToDoListState extends State<ToDoList> {
+  List<String> tasks = [];
+
+  void addTask(String task) {
+    setState(() {
+      tasks.add(task);
+    });
+  }
+
+  void deleteTask(int index) {
+    setState(() {
+      tasks.removeAt(index);
+    });
+  }
