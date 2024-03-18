@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => TodoListPage(),
-        '/addTodo': (context) => TodoFormPage(),
+        '/addTodo': (context) => TodoTaskPage(),
         '/animalList': (context) => AnimalListPage(),
         '/animalDetails': (context) => AnimalDetailsPage(animalName: '',),
       },
@@ -75,7 +75,7 @@ class _TodoListPageState extends State<TodoListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(child: Text('Todo List')),
+        title: Center(child: Text('Todo List',style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold,),)),
       ),
       body: loading
           ? Center(child: CircularProgressIndicator())

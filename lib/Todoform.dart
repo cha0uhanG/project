@@ -3,9 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'animal_screen.dart';
 import 'Animal_detail.dart';
 
-
-
-class TodoFormPage extends StatelessWidget {
+class TodoTaskPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -26,15 +24,36 @@ class ToDoList extends StatefulWidget {
 class _ToDoListState extends State<ToDoList> {
   List<String> tasks = [];
 
+  @override
+  void initState() {
+    super.initState();
+    // Load tasks from shared preferences when the widget initializes
+    _loadTasks();
+  }
+
+  void _loadTasks() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      tasks = prefs.getStringList('tasks') ?? [];
+    });
+  }
+
+  void _saveTasks() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setStringList('tasks', tasks);
+  }
+
   void addTask(String task) {
     setState(() {
       tasks.add(task);
+      _saveTasks(); // Save tasks when a new task is added
     });
   }
 
   void deleteTask(int index) {
     setState(() {
       tasks.removeAt(index);
+      _saveTasks(); // Save tasks after deleting a task
     });
   }
 
@@ -81,14 +100,22 @@ class _ToDoListState extends State<ToDoList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('To-Do List'),
+        title: Center(
+          child: Text(
+            'To-Do List',
+            style: TextStyle(
+              fontSize: 30,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
         actions: [
           IconButton(
-            icon: Icon(Icons.navigate_next),
+            icon: Icon(Icons.navigate_next,size:35 ,),
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) =>  AnimalListPage()),
+                MaterialPageRoute(builder: (context) => AnimalListPage()),
               );
             },
           ),
@@ -150,6 +177,3 @@ class OtherPage extends StatelessWidget {
     );
   }
 }
-
-
-
